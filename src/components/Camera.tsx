@@ -60,9 +60,9 @@ const Camera = () => {
             className='w-full h-full object-cover'
             videoConstraints={
               {
-                // facingMode: {
-                //   exact: 'environment',
-                // }, // 'user' for front camera, 'environment' for back camera
+                facingMode: {
+                  exact: 'environment',
+                }, // 'user' for front camera, 'environment' for back camera
               }
             }
           />
