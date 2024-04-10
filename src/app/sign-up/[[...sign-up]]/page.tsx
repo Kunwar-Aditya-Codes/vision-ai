@@ -1,4 +1,3 @@
-import Footer from '@/components/Footer';
 import { SignUp } from '@clerk/nextjs';
 
 const page = () => {
@@ -7,7 +6,6 @@ const page = () => {
       <div className='flex-grow flex items-center justify-center'>
         <SignUp afterSignUpUrl={'/capture'} />
       </div>
-      <Footer />
     </div>
   );
 };
