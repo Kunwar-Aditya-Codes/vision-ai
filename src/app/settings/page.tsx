@@ -1,9 +1,15 @@
+'use client';
 import Blob from '@/components/Blob';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
+import useBoundStore from '@/store/store';
 import { UserButton } from '@clerk/nextjs';
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 const page = () => {
+  const { isBlind, setBlind } = useBoundStore((state) => state);
+
   return (
     <>
       <Blob />
@@ -17,6 +23,8 @@ const page = () => {
                 For Blind
               </label>
               <Switch
+                checked={isBlind}
+                onCheckedChange={() => setBlind()}
                 id='airplane-mode'
                 className=' data-[state=checked]:bg-gray-200 data-[state=unchecked]:bg-gray-950 border border-white/20'
               />
@@ -30,6 +38,13 @@ const page = () => {
               Upgrade to Pro
             </Button>
           </div>
+          <Link
+            href={'/chat'}
+            className='flex items-center space-x-1 underline underline-offset-2'
+          >
+            <ArrowLeft className='size-4' />
+            <span>Back to chat</span>
+          </Link>
         </div>
       </div>
     </>

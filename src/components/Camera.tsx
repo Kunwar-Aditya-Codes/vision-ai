@@ -3,8 +3,12 @@ import { useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { Circle, RotateCcw, Send, Settings } from 'lucide-react';
 import Link from 'next/link';
+import useBoundStore from '@/store/store';
 
 const Camera = () => {
+  const { isBlind } = useBoundStore((state) => state);
+
+  console.log(isBlind);
   const webcamRef = useRef<Webcam>(null);
   const [capture, setCapture] = useState<string>();
 
@@ -33,6 +37,8 @@ const Camera = () => {
             />
             <Send className='size-9 rounded-lg border p-2 cursor-pointer bg-white/5' />
           </div>
+
+          <p className='text-center mt-4'>isBlind: {String(isBlind)}</p>
         </div>
       ) : null}
 
@@ -43,13 +49,11 @@ const Camera = () => {
             ref={webcamRef}
             screenshotFormat='image/jpeg'
             className='w-full h-full object-cover'
-            videoConstraints={
-              {
-                // facingMode: {
-                //   exact: 'environment',
-                // }, // 'user' for front camera, 'environment' for back camera
-              }
-            }
+            videoConstraints={{
+              facingMode: {
+                exact: 'environment',
+              }, // 'user' for front camera, 'environment' for back camera
+            }}
           />
           <button
             onClick={captureImage}
