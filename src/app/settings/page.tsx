@@ -1,4 +1,5 @@
 'use client';
+
 import Blob from '@/components/Blob';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -7,7 +8,7 @@ import { UserButton } from '@clerk/nextjs';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
-const page = () => {
+const Settings = () => {
   const { isBlind, setBlind } = useBoundStore((state) => state);
 
   return (
@@ -50,4 +51,4 @@ const page = () => {
     </>
   );
 };
-export default page;
+export default Settings;

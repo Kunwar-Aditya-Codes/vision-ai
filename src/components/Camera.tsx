@@ -1,14 +1,13 @@
 'use client';
 import { useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import { Circle, RotateCcw, Send, Settings } from 'lucide-react';
+import { Circle, Send, Settings } from 'lucide-react';
 import Link from 'next/link';
 import useBoundStore from '@/store/store';
 
 const Camera = () => {
   const { isBlind } = useBoundStore((state) => state);
 
-  console.log(isBlind);
   const webcamRef = useRef<Webcam>(null);
   const [capture, setCapture] = useState<string>();
 
