@@ -25,7 +25,7 @@ const Camera = () => {
       </Link>
       {capture ? (
         <div className='h-full object-cover'>
-          <img src={capture} alt='' className='h-[50%] object-cover' />
+          <img src={capture} alt='' className='h-[50%] w-full object-cover' />
           <div className=' mt-4 flex items-center px-2 gap-x-2'>
             <input
               className='w-full p-2 rounded-lg text-sm bg-transparent border'
@@ -43,15 +43,17 @@ const Camera = () => {
             ref={webcamRef}
             screenshotFormat='image/jpeg'
             className='w-full h-full object-cover'
-            videoConstraints={{
-              // facingMode: {
-              //   exact: 'environment',
-              // }, // 'user' for front camera, 'environment' for back camera
-            }}
+            videoConstraints={
+              {
+                // facingMode: {
+                //   exact: 'environment',
+                // }, // 'user' for front camera, 'environment' for back camera
+              }
+            }
           />
           <button
             onClick={captureImage}
-            className='absolute bottom-12 flex items-center justify-center left-0 right-0 border-2 w-fit mx-auto rounded-full p-1'
+            className='absolute bottom-20 flex items-center justify-center left-0 right-0 border-2 w-fit mx-auto rounded-full p-1'
           >
             <Circle className='size-12 bg-white rounded-full' />
           </button>
