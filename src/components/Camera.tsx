@@ -2,14 +2,7 @@
 import { useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { Circle, RotateCcw, Send, Settings } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import Link from 'next/link';
 
 const Camera = () => {
   const webcamRef = useRef<Webcam>(null);
@@ -24,23 +17,15 @@ const Camera = () => {
 
   return (
     <div className='h-full relative'>
-      <button className='absolute top-4 flex items-center justify-center  right-4 bg-gray-950 w-fit mx-auto rounded-full p-1.5'>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Settings className='size-5' />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className='mr-4 mt-2 bg-gray-950 border-none w-[10rem] text-white'>
-            {/* TODO: add switch */}
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </button>
+      <Link
+        href={'/settings'}
+        className='absolute z-10 top-4 flex items-center justify-center  right-4 bg-gray-950 w-fit mx-auto rounded-full p-1.5'
+      >
+        <Settings className='size-6' />
+      </Link>
       {capture ? (
         <div className='h-full object-cover'>
-          <img src={capture} alt='' className='h-[80%] object-cover' />
+          <img src={capture} alt='' className='h-[50%] object-cover' />
           <div className=' mt-4 flex items-center px-2 gap-x-2'>
             <input
               className='w-full p-2 rounded-lg text-sm bg-transparent border'
@@ -58,17 +43,15 @@ const Camera = () => {
             ref={webcamRef}
             screenshotFormat='image/jpeg'
             className='w-full h-full object-cover'
-            videoConstraints={
-              {
-                facingMode: {
-                  exact: 'environment',
-                }, // 'user' for front camera, 'environment' for back camera
-              }
-            }
+            videoConstraints={{
+              // facingMode: {
+              //   exact: 'environment',
+              // }, // 'user' for front camera, 'environment' for back camera
+            }}
           />
           <button
             onClick={captureImage}
-            className='absolute bottom-5 flex items-center justify-center left-0 right-0 border-2 w-fit mx-auto rounded-full p-1'
+            className='absolute bottom-12 flex items-center justify-center left-0 right-0 border-2 w-fit mx-auto rounded-full p-1'
           >
             <Circle className='size-12 bg-white rounded-full' />
           </button>
