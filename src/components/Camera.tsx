@@ -1,12 +1,19 @@
 'use client';
-import { useCallback, useRef, useState } from 'react';
+import 'regenerator-runtime/runtime';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import { Circle, Send, Settings } from 'lucide-react';
+import { Circle, Mic, Send, Settings } from 'lucide-react';
 import Link from 'next/link';
 import useBoundStore from '@/store/store';
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from 'react-speech-recognition';
+import { cn } from '@/lib/utils';
+import Blind from './Blind';
 
 const Camera = () => {
   const { isBlind } = useBoundStore((state) => state);
+  const [question, setQuestion] = useState<string>('');
 
   const webcamRef = useRef<Webcam>(null);
   const [capture, setCapture] = useState<string>();
@@ -17,6 +24,8 @@ const Camera = () => {
       setCapture(imageSrc);
     }
   }, [webcamRef]);
+
+  console.log(question);
 
   return (
     <div className='h-full relative'>
@@ -29,13 +38,19 @@ const Camera = () => {
       {capture ? (
         <div className='h-full object-cover'>
           <img src={capture} alt='' className='h-[50%] w-full object-cover' />
-          <div className=' mt-4 flex items-center px-2 gap-x-2'>
-            <input
-              className='w-full p-2 rounded-lg text-sm bg-transparent border'
-              placeholder='Ask about image... '
-            />
-            <Send className='size-9 rounded-lg border p-2 cursor-pointer bg-white/5' />
-          </div>
+          {isBlind ? (
+            <Blind />
+          ) : (
+            <div className='mt-2 flex items-start justify-between w-full px-2 gap-x-2'>
+              <input
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                className='w-full p-2 rounded-lg text-sm bg-transparent border'
+                placeholder='Ask about image... '
+              />
+              <Send className='w-10 size-9 rounded-lg border p-2 cursor-pointer bg-white/5' />
+            </div>
+          )}
 
           <p className='text-center mt-4'>isBlind: {String(isBlind)}</p>
         </div>
@@ -48,11 +63,13 @@ const Camera = () => {
             ref={webcamRef}
             screenshotFormat='image/jpeg'
             className='w-full h-full object-cover'
-            videoConstraints={{
-              facingMode: {
-                exact: 'environment',
-              }, // 'user' for front camera, 'environment' for back camera
-            }}
+            videoConstraints={
+              {
+                // facingMode: {
+                //   exact: 'environment',
+                // }, // 'user' for front camera, 'environment' for back camera
+              }
+            }
           />
           <button
             onClick={captureImage}
