@@ -3,7 +3,7 @@ import SpeechRecognition, {
 } from 'react-speech-recognition';
 import { cn, fetchAnswer } from '@/lib/utils';
 import { useEffect, useRef, useState } from 'react';
-import { Mic } from 'lucide-react';
+import { Mic, Volume2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const Blind = ({ capture }: { capture: string }) => {
@@ -32,19 +32,6 @@ const Blind = ({ capture }: { capture: string }) => {
     }, 5000);
   };
 
-  useEffect(() => {
-    setQuestion(transcript);
-
-    if (silenceTimeoutRef.current) {
-      clearTimeout(silenceTimeoutRef.current);
-    }
-
-    silenceTimeoutRef.current = setTimeout(() => {
-      stopListening();
-      handleSubmit();
-    }, 3000);
-  }, [transcript]);
-
   const handleSubmit = async () => {
     if (!capture) {
       toast.error('No image found!', {
@@ -65,22 +52,52 @@ const Blind = ({ capture }: { capture: string }) => {
     const ans = await res.json();
 
     if (ans.success === false) {
-      setAnswer('Fetch failed!');
+      setAnswer('Error. Try again!');
+      speakAnswer('Error. Try again!');
     } else {
       setAnswer(ans.answer);
+      speakAnswer(ans.answer);
     }
     setQuestion('');
   };
 
+  useEffect(() => {
+    setQuestion(transcript);
+
+    if (silenceTimeoutRef.current) {
+      clearTimeout(silenceTimeoutRef.current);
+    }
+
+    silenceTimeoutRef.current = setTimeout(() => {
+      stopListening();
+      handleSubmit();
+      console.log('submit');
+    }, 3000);
+  }, [transcript]);
+
+  const speakAnswer = (text: string) => {
+    const speech = new SpeechSynthesisUtterance();
+    speech.text = text;
+    window.speechSynthesis.speak(speech);
+  };
+
   return (
     <div className='p-2 md:p-4 w-full flex flex-col justify-end'>
-      <Mic
-        onClick={startListening}
-        className={cn(
-          'size-9 rounded-lg border p-2 cursor-pointer bg-white/5',
-          listening && 'bg-white text-black'
-        )}
-      />
+      <div className='flex items-center justify-between'>
+        <Mic
+          onClick={startListening}
+          className={cn(
+            'size-9 rounded-lg border p-2 cursor-pointer bg-white/5',
+            listening && 'bg-white text-black'
+          )}
+        />
+        <Volume2
+          onClick={() => speakAnswer(answer)}
+          className={cn(
+            'size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
+          )}
+        />
+      </div>
 
       <div className='mt-2'>
         <textarea

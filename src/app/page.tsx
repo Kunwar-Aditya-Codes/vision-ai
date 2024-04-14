@@ -72,6 +72,27 @@ const TECH = [
   },
 ];
 
+const TEAM = [
+  {
+    id: 1,
+    name: 'Kunwar Aditya',
+    description: '',
+    sourceImage: '/new.png',
+  },
+  {
+    id: 2,
+    name: 'Niharika Rindhe',
+    description: '',
+    sourceImage: '/niharika.jpeg',
+  },
+  {
+    id: 3,
+    name: 'Yash Badgujar',
+    description: '',
+    sourceImage: '/yash.jpeg',
+  },
+];
+
 export default function Home() {
   const { userId } = auth();
 
@@ -130,8 +151,15 @@ export default function Home() {
             The Team
           </h1>
 
-          <div className='mt-10'>
-            <ProfileCard />
+          <div className='mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-items-center gap-4'>
+            {TEAM.map((member) => (
+              <ProfileCard
+                key={member.id}
+                name={member.name}
+                source={member.sourceImage}
+                description={member.description}
+              />
+            ))}
           </div>
         </div>
 
