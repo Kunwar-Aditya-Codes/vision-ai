@@ -10,12 +10,16 @@ export const POST = async (req: NextRequest) => {
   try {
     const data: ImageData = await req.json();
 
+    const base64EncodedImage = data.imageData.split(
+      'data:image/jpeg;base64,'
+    )[1];
+
     const llava = new Ollama({
       // baseUrl: 'http://localhost:11434',
       baseUrl: 'http://165.232.182.19:11434',
       model: 'llava',
     }).bind({
-      images: [data.imageData],
+      images: [base64EncodedImage],
     });
 
     const llavaStream = await llava.stream(

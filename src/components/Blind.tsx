@@ -1,14 +1,16 @@
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
-import { cn } from '@/lib/utils';
+import { cn, fetchAnswer } from '@/lib/utils';
 import { useEffect, useRef, useState } from 'react';
 import { Mic } from 'lucide-react';
+import toast from 'react-hot-toast';
 
-const Blind = () => {
+const Blind = ({ capture }: { capture: string }) => {
   const [question, setQuestion] = useState<string>('');
   const { transcript, isMicrophoneAvailable, listening } =
     useSpeechRecognition();
+  const [answer, setAnswer] = useState<string>('');
 
   const silenceTimeoutRef = useRef<NodeJS.Timeout>();
 
@@ -39,9 +41,36 @@ const Blind = () => {
 
     silenceTimeoutRef.current = setTimeout(() => {
       stopListening();
-      // console.log('Auto-sending:', question);
+      handleSubmit();
     }, 3000);
   }, [transcript]);
+
+  const handleSubmit = async () => {
+    if (!capture) {
+      toast.error('No image found!', {
+        duration: 1500,
+      });
+      return;
+    }
+
+    if (!question) {
+      toast.error('No question found!', {
+        duration: 1500,
+      });
+      return;
+    }
+
+    const res = await fetchAnswer({ imageData: capture, question });
+
+    const ans = await res.json();
+
+    if (ans.success === false) {
+      setAnswer('Fetch failed!');
+    } else {
+      setAnswer(ans.answer);
+    }
+    setQuestion('');
+  };
 
   return (
     <div className='p-2 md:p-4 w-full flex flex-col justify-end'>
@@ -61,6 +90,8 @@ const Blind = () => {
           placeholder='Ask about image... '
         />
       </div>
+
+      <p>{answer}</p>
     </div>
   );
 };
