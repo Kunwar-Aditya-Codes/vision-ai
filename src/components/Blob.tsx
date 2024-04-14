@@ -1,6 +1,6 @@
 const Blob = () => {
   return (
-    <div className=' flex items-center justify-center absolute left-0 right-0  top-0 bottom-0 -z-10 bg-gray-950'>
+    <div className=' flex items-center justify-center w-full h-full fixed left-0 right-0 top-0 bottom-0 -z-10 bg-gray-950'>
       <svg
         viewBox='0 0 500 500'
         xmlns='http://www.w3.org/2000/svg'

@@ -15,7 +15,16 @@ const Settings = () => {
     <>
       <Blob />
       <div className='z-20 h-screen bg-gray-950/30 backdrop-blur-xl p-6 flex flex-col'>
-        <UserButton afterSignOutUrl={'/'} />
+        <div className='flex items-center justify-between'>
+          <Link
+            href={'/chat'}
+            className='flex items-center text-sm font-light text-zinc-300 space-x-1 underline underline-offset-2'
+          >
+            <ArrowLeft className='size-4' />
+            <span>Back to chat</span>
+          </Link>
+          <UserButton afterSignOutUrl={'/'} />
+        </div>
         <div className='grow flex flex-col gap-y-6 mt-20'>
           <h1 className='text-2xl font-light text-center'>User Settings</h1>
           <div className=' rounded-lg border-white/10 flex flex-col gap-y-8 items-start p-8 shadow-xl border w-full  h-auto'>
@@ -39,13 +48,6 @@ const Settings = () => {
               Upgrade to Pro
             </Button>
           </div>
-          <Link
-            href={'/chat'}
-            className='flex items-center space-x-1 underline underline-offset-2'
-          >
-            <ArrowLeft className='size-4' />
-            <span>Back to chat</span>
-          </Link>
         </div>
       </div>
     </>

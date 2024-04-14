@@ -25,8 +25,6 @@ const Camera = () => {
     }
   }, [webcamRef]);
 
-  console.log(question);
-
   return (
     <div className='h-full relative'>
       <Link
