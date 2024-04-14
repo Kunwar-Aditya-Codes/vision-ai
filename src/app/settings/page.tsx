@@ -18,10 +18,9 @@ const Settings = () => {
         <div className='flex items-center justify-between'>
           <Link
             href={'/chat'}
-            className='flex items-center text-sm font-light text-zinc-300 space-x-1 underline underline-offset-2'
+            className='flex items-center text-sm  text-zinc-300 '
           >
-            <ArrowLeft className='size-4' />
-            <span>Back to chat</span>
+            <ArrowLeft className='size-5' />
           </Link>
           <UserButton afterSignOutUrl={'/'} />
         </div>

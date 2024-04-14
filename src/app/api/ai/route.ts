@@ -23,7 +23,9 @@ export const POST = async (req: NextRequest) => {
     });
 
     const llavaStream = await llava.stream(
-      `Answer this question from the provided image - "${data.question}". Don't add extra response. Answer only what is asked`
+      data.question
+        ? `Answer this question from the provided image - "${data.question}". Don't add extra response. Answer only what is asked`
+        : 'Explain the image'
     );
     const llavaAnswer = await streamToString(llavaStream);
 
