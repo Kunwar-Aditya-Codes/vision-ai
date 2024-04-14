@@ -39,12 +39,12 @@ const Blind = () => {
 
     silenceTimeoutRef.current = setTimeout(() => {
       stopListening();
-      console.log('Auto-sending:', question);
-    }, 5000);
+      // console.log('Auto-sending:', question);
+    }, 3000);
   }, [transcript]);
 
   return (
-    <div className='p-2'>
+    <div className='p-2 md:p-4 w-full flex flex-col justify-end'>
       <Mic
         onClick={startListening}
         className={cn(

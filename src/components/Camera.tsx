@@ -1,19 +1,17 @@
 'use client';
 import 'regenerator-runtime/runtime';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import { Circle, Mic, Send, Settings } from 'lucide-react';
+import { Circle, Send, Settings } from 'lucide-react';
 import Link from 'next/link';
 import useBoundStore from '@/store/store';
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from 'react-speech-recognition';
-import { cn } from '@/lib/utils';
 import Blind from './Blind';
+import { FaCameraRotate } from 'react-icons/fa6';
 
 const Camera = () => {
   const { isBlind } = useBoundStore((state) => state);
   const [question, setQuestion] = useState<string>('');
+  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
 
   const webcamRef = useRef<Webcam>(null);
   const [capture, setCapture] = useState<string>();
@@ -25,6 +23,10 @@ const Camera = () => {
     }
   }, [webcamRef]);
 
+  const toggleFacingMode = () => {
+    setFacingMode((prevMode) => (prevMode === 'user' ? 'environment' : 'user'));
+  };
+
   return (
     <div className='h-full relative'>
       <Link
@@ -34,12 +36,16 @@ const Camera = () => {
         <Settings className='size-6' />
       </Link>
       {capture ? (
-        <div className='h-full object-cover'>
-          <img src={capture} alt='' className='h-[50%] w-full object-cover' />
+        <div className='h-full md:flex object-cover'>
+          <img
+            src={capture}
+            alt=''
+            className='h-[50%] md:h-full md:w-[40%] w-full object-cover'
+          />
           {isBlind ? (
             <Blind />
           ) : (
-            <div className='mt-2 flex items-start justify-between w-full px-2 gap-x-2'>
+            <div className='mt-2 flex items-start md:items-end md:p-4 justify-between w-full px-2 gap-x-2'>
               <input
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
@@ -49,8 +55,6 @@ const Camera = () => {
               <Send className='w-10 size-9 rounded-lg border p-2 cursor-pointer bg-white/5' />
             </div>
           )}
-
-          <p className='text-center mt-4'>isBlind: {String(isBlind)}</p>
         </div>
       ) : null}
 
@@ -61,19 +65,24 @@ const Camera = () => {
             ref={webcamRef}
             screenshotFormat='image/jpeg'
             className='w-full h-full object-cover'
-            videoConstraints={
-              {
-                // facingMode: {
-                //   exact: 'environment',
-                // }, // 'user' for front camera, 'environment' for back camera
-              }
-            }
+            videoConstraints={{
+              facingMode: {
+                exact: facingMode,
+              }, // 'user' for front camera, 'environment' for back camera
+            }}
           />
           <button
             onClick={captureImage}
             className='absolute bottom-20 flex items-center justify-center left-0 right-0 border-2 w-fit mx-auto rounded-full p-1'
           >
             <Circle className='size-12 bg-white rounded-full' />
+          </button>
+
+          <button
+            onClick={toggleFacingMode}
+            className='absolute bottom-20 flex items-center justify-center  left-8 border-2 w-fit mx-auto rounded-full p-1'
+          >
+            <FaCameraRotate className='size-8  rounded-full p-1' />
           </button>
         </>
       ) : null}

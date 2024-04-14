@@ -14,7 +14,7 @@ const Settings = () => {
   return (
     <>
       <Blob />
-      <div className='z-20 h-screen bg-gray-950/30 backdrop-blur-xl p-6 flex flex-col'>
+      <div className='z-20 max-w-5xl mx-auto  h-screen bg-gray-950/30 backdrop-blur-xl p-6 flex flex-col'>
         <div className='flex items-center justify-between'>
           <Link
             href={'/chat'}
@@ -25,9 +25,9 @@ const Settings = () => {
           </Link>
           <UserButton afterSignOutUrl={'/'} />
         </div>
-        <div className='grow flex flex-col gap-y-6 mt-20'>
+        <div className='grow md:justify-center flex flex-col gap-y-6 mt-20'>
           <h1 className='text-2xl font-light text-center'>User Settings</h1>
-          <div className=' rounded-lg border-white/10 flex flex-col gap-y-8 items-start p-8 shadow-xl border w-full  h-auto'>
+          <div className='max-w-lg mx-auto md:bg-white/5 rounded-lg border-white/10 flex flex-col gap-y-8 items-start p-8 shadow-xl border w-full  h-auto'>
             <div className='flex items-center justify-between w-full'>
               <label htmlFor='airplane-mode' className='text-lg font-medium'>
                 For Blind
