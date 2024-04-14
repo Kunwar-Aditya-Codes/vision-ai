@@ -11,7 +11,9 @@ import { FaCameraRotate } from 'react-icons/fa6';
 const Camera = () => {
   const { isBlind } = useBoundStore((state) => state);
   const [question, setQuestion] = useState<string>('');
-  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
+  const [facingMode, setFacingMode] = useState<'user' | 'environment'>(
+    'environment'
+  );
 
   const webcamRef = useRef<Webcam>(null);
   const [capture, setCapture] = useState<string>();
