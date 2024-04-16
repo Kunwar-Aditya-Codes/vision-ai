@@ -2,13 +2,15 @@
 import 'regenerator-runtime/runtime';
 import { useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import { Circle, FileImage, Send, Settings } from 'lucide-react';
+import { Circle, FileImage, Send, Settings, X } from 'lucide-react';
 import Link from 'next/link';
 import useBoundStore from '@/store/store';
 import Blind from './Blind';
 import { FaCameraRotate } from 'react-icons/fa6';
 import { fetchAnswer } from '@/lib/utils';
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { Button } from './ui/button';
 
 const Camera = () => {
   const { isBlind } = useBoundStore((state) => state);
@@ -17,9 +19,9 @@ const Camera = () => {
     'environment'
   );
   const [answer, setAnswer] = useState<string>('');
-
   const webcamRef = useRef<Webcam>(null);
   const [capture, setCapture] = useState<string>();
+  const router = useRouter();
 
   const captureImage = useCallback(async () => {
     if (webcamRef.current) {
@@ -72,14 +74,31 @@ const Camera = () => {
     }
   };
 
+  const handleReset = () => {
+    setCapture('');
+
+    router.refresh();
+  };
+
   return (
     <div className='h-full relative'>
-      <Link
-        href={'/settings'}
-        className='absolute z-10 top-4 flex items-center justify-center  right-4 bg-gray-950 w-fit mx-auto rounded-full p-1.5'
-      >
-        <Settings className='size-6' />
-      </Link>
+      <div>
+        {capture ? (
+          <button
+            onClick={handleReset}
+            className='absolute z-10 top-4 flex items-center justify-center left-4 bg-gray-950 w-fit mx-auto rounded-full p-1.5'
+          >
+            <X className='size-6' />
+          </button>
+        ) : null}
+        <Link
+          href={'/settings'}
+          className='absolute z-10 top-4 flex items-center justify-center  right-4 bg-gray-950 w-fit mx-auto rounded-full p-1.5'
+        >
+          <Settings className='size-6' />
+        </Link>
+      </div>
+
       {capture ? (
         <div className='h-full flex flex-col md:flex-row object-cover'>
           <img
