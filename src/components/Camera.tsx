@@ -19,6 +19,7 @@ const Camera = () => {
     'environment'
   );
   const [answer, setAnswer] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const webcamRef = useRef<Webcam>(null);
   const [capture, setCapture] = useState<string>();
   const router = useRouter();
@@ -35,10 +36,13 @@ const Camera = () => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
+
     if (!capture) {
       toast.error('No image found!', {
         duration: 1500,
       });
+      setLoading(false);
       return;
     }
 
@@ -46,6 +50,7 @@ const Camera = () => {
       toast.error('No question found!', {
         duration: 1500,
       });
+      setLoading(false);
       return;
     }
 
@@ -58,7 +63,9 @@ const Camera = () => {
     } else {
       setAnswer(ans.answer);
     }
+
     setQuestion('');
+    setLoading(false);
   };
 
   const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,8 +83,9 @@ const Camera = () => {
 
   const handleReset = () => {
     setCapture('');
-
+    setAnswer('');
     router.refresh();
+    router.push('/chat');
   };
 
   return (
@@ -110,7 +118,13 @@ const Camera = () => {
             <Blind capture={capture} />
           ) : (
             <div className='flex flex-col justify-end grow  gap-y-2 p-4 w-full'>
-              <p className=''>ans{answer}</p>
+              <p className=''>
+                {loading ? (
+                  <span className='animate-pulse'>Generating response...</span>
+                ) : (
+                  <>{answer}</>
+                )}
+              </p>
 
               <div className='mt-2 flex items-start md:items-end justify-between w-full gap-x-2'>
                 <input

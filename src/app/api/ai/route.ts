@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
 
     const llava = new Ollama({
       // baseUrl: 'http://localhost:11434',
-      baseUrl: 'http://165.232.182.19:11434',
+      baseUrl: 'http://142.93.210.103:11434',
       model: 'llava',
     }).bind({
       images: [base64EncodedImage],
