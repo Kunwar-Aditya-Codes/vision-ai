@@ -38,23 +38,28 @@ const Settings = () => {
                 className=' data-[state=checked]:bg-gray-200 data-[state=unchecked]:bg-gray-950 border border-white/20'
               />
             </div>
+
             <div className='flex items-center justify-between w-full text-lg font-medium'>
               <label htmlFor='plan-type'>Current Plan</label>
               <p id='plan-type'>Basic</p>
             </div>
 
-            <Button className='w-full bg-transparent border border-white/25  hover:bg-white/5'>
-              Upgrade to Pro
-            </Button>
+            <div className='grid grid-cols-1 gap-y-3 w-full'>
+              <Button className='w-full bg-transparent border border-white/25  hover:bg-white/5'>
+                Upgrade to Pro
+              </Button>
 
-            <Link
-              className='font-light underline text-sm underline-offset-4'
-              href={'https://forms.gle/hveMuCfFeTmRuBM99'}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              Share your feedback
-            </Link>
+              <Button asChild>
+                <Link
+                  className='w-full bg-transparent border border-white/25  hover:bg-white/5'
+                  href={'https://forms.gle/hveMuCfFeTmRuBM99'}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  Share your feedback
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

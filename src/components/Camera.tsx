@@ -2,7 +2,7 @@
 import 'regenerator-runtime/runtime';
 import { useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import { Circle, Send, Settings } from 'lucide-react';
+import { Circle, FileImage, Send, Settings } from 'lucide-react';
 import Link from 'next/link';
 import useBoundStore from '@/store/store';
 import Blind from './Blind';
@@ -59,6 +59,19 @@ const Camera = () => {
     setQuestion('');
   };
 
+  const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0];
+    const reader = new FileReader();
+
+    if (file) {
+      reader.readAsDataURL(file);
+
+      reader.onloadend = () => {
+        setCapture(reader.result as string);
+      };
+    }
+  };
+
   return (
     <div className='h-full relative'>
       <Link
@@ -77,7 +90,9 @@ const Camera = () => {
           {isBlind ? (
             <Blind capture={capture} />
           ) : (
-            <div className='flex flex-col md:flex-col-reverse gap-y-2 px-2 md:p-4 w-full'>
+            <div className='flex flex-col justify-end grow  gap-y-2 p-4 w-full'>
+              <p className=''>ans{answer}</p>
+
               <div className='mt-2 flex items-start md:items-end justify-between w-full gap-x-2'>
                 <input
                   value={question}
@@ -90,8 +105,6 @@ const Camera = () => {
                   className='w-10 size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
                 />
               </div>
-
-              <p className=''>{answer}</p>
             </div>
           )}
         </div>
@@ -115,6 +128,17 @@ const Camera = () => {
             className='absolute bottom-20 flex items-center justify-center left-0 right-0 border-2 w-fit mx-auto rounded-full p-1'
           >
             <Circle className='size-12 bg-white rounded-full' />
+          </button>
+
+          <button className='absolute bottom-20 flex items-center justify-center  right-8 border-2 w-fit mx-auto rounded-full p-1 cursor-pointer'>
+            <input
+              type='file'
+              accept='image/*'
+              className='absolute inset-0 opacity-0 w-full h-full cursor-pointer'
+              onChange={handleImageInput}
+            />
+
+            <FileImage className='size-8  rounded-full p-1 cursor-pointer' />
           </button>
 
           <button
