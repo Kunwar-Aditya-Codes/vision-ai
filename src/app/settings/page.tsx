@@ -46,6 +46,15 @@ const Settings = () => {
             <Button className='w-full bg-transparent border border-white/25  hover:bg-white/5'>
               Upgrade to Pro
             </Button>
+
+            <Link
+              className='font-light underline text-sm underline-offset-4'
+              href={'https://forms.gle/hveMuCfFeTmRuBM99'}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Share your feedback
+            </Link>
           </div>
         </div>
       </div>

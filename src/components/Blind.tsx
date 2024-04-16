@@ -84,37 +84,38 @@ const Blind = ({ capture }: { capture: string }) => {
   };
 
   return (
-    <div className='p-2 md:p-4 w-full flex flex-col justify-end'>
+    <div className='p-2 md:p-4 w-full flex flex-col grow justify-between  md:mt-16'>
       <div className='flex items-center justify-between'>
         <Mic
           onClick={startListening}
           className={cn(
-            'size-9 rounded-lg border p-2 cursor-pointer bg-white/5',
+            'size-11 md:size-9 rounded-lg border p-2 cursor-pointer bg-white/5',
             listening && 'bg-white text-black'
           )}
         />
         <Volume2
           onClick={() => speakAnswer(answer)}
           className={cn(
-            'size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
+            'size-11 md:size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
           )}
         />
       </div>
 
-      <div className='mt-2 flex items-start gap-x-2'>
-        <textarea
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          className='w-full p-2 rounded-lg text-sm bg-transparent border'
-          placeholder='Ask about image... '
-        />
-        <Send
-          onClick={handleSubmit}
-          className='w-10 size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
-        />
+      <div>
+        <p className=''>ans{answer}</p>
+        <div className='mt-2 flex items-start gap-x-2'>
+          <textarea
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            className='w-full p-2 rounded-lg text-sm bg-transparent border'
+            placeholder='Ask about image... '
+          />
+          <Send
+            onClick={handleSubmit}
+            className='w-10 size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
+          />
+        </div>
       </div>
-
-      <p className='mt-2'>{answer}</p>
     </div>
   );
 };

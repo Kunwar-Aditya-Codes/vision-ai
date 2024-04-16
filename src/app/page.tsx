@@ -162,7 +162,6 @@ export default function Home() {
             ))}
           </div>
         </div>
-
         <footer className='flex items-center justify-center w-full h-12 bg-white/5'>
           <p className='text-sm text-zinc-200'>
             &copy; {new Date().getFullYear()}. All rights reserved.

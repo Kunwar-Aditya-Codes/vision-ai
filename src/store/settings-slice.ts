@@ -18,4 +18,5 @@ export const createSettingsSlice: StateCreator<
       isBlind: !state.isBlind,
     }));
   },
+
 });

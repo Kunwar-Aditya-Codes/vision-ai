@@ -68,7 +68,7 @@ const Camera = () => {
         <Settings className='size-6' />
       </Link>
       {capture ? (
-        <div className='h-full md:flex object-cover'>
+        <div className='h-full flex flex-col md:flex-row object-cover'>
           <img
             src={capture}
             alt=''
