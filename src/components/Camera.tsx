@@ -2,15 +2,13 @@
 import 'regenerator-runtime/runtime';
 import { useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import { Circle, FileImage, Send, Settings, X } from 'lucide-react';
+import { Circle, FileImage, Loader2, Send, Settings, X } from 'lucide-react';
 import Link from 'next/link';
 import useBoundStore from '@/store/store';
 import Blind from './Blind';
 import { FaCameraRotate } from 'react-icons/fa6';
 import { fetchAnswer } from '@/lib/utils';
 import toast, { Toaster } from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
-import { Button } from './ui/button';
 
 const Camera = () => {
   const { isBlind } = useBoundStore((state) => state);
@@ -22,7 +20,7 @@ const Camera = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const webcamRef = useRef<Webcam>(null);
   const [capture, setCapture] = useState<string>();
-  const router = useRouter();
+  const [chatQuestion, setChatQuestion] = useState<string>('');
 
   const captureImage = useCallback(async () => {
     if (webcamRef.current) {
@@ -38,6 +36,10 @@ const Camera = () => {
   const handleSubmit = async () => {
     setLoading(true);
 
+    setChatQuestion(question);
+
+    setQuestion('');
+
     if (!capture) {
       toast.error('No image found!', {
         duration: 1500,
@@ -46,15 +48,10 @@ const Camera = () => {
       return;
     }
 
-    if (!question) {
-      toast.error('No question found!', {
-        duration: 1500,
-      });
-      setLoading(false);
-      return;
-    }
-
-    const res = await fetchAnswer({ imageData: capture, question });
+    const res = await fetchAnswer({
+      imageData: capture,
+      question,
+    });
 
     const ans = await res.json();
 
@@ -64,7 +61,6 @@ const Camera = () => {
       setAnswer(ans.answer);
     }
 
-    setQuestion('');
     setLoading(false);
   };
 
@@ -83,9 +79,8 @@ const Camera = () => {
 
   const handleReset = () => {
     setCapture('');
+    setChatQuestion('');
     setAnswer('');
-    router.refresh();
-    router.push('/chat');
   };
 
   return (
@@ -109,34 +104,52 @@ const Camera = () => {
 
       {capture ? (
         <div className='h-full flex flex-col md:flex-row object-cover'>
-          <img
-            src={capture}
-            alt=''
-            className='h-[50%] md:h-full md:w-[40%] w-full object-cover'
-          />
+          <div className='h-[80%] flex items-center justify-center  md:h-full md:w-[70%] w-full bg-[url("https://media.istockphoto.com/id/1403848173/vector/vector-online-chatting-pattern-online-chatting-seamless-background.jpg?s=612x612&w=0&k=20&c=W3O15mtJiNlJuIgU6S9ZlnzM_yCE27eqwTCfXGYwCSo=")] bg-zinc-950/90 bg-blend-color p-4'>
+            <img src={capture} alt='' className='rounded-xl' />
+          </div>
           {isBlind ? (
             <Blind capture={capture} />
           ) : (
-            <div className='flex flex-col justify-end grow  gap-y-2 p-4 w-full'>
-              <p className=''>
-                {loading ? (
-                  <span className='animate-pulse'>Generating response...</span>
-                ) : (
-                  <>{answer}</>
-                )}
-              </p>
+            <div className='flex flex-col h-full justify-end gap-y-2 p-4 w-full'>
+              <div className='border border-white/15 md:mt-12 grow flex flex-col justify-end rounded-lg p-4'>
+                <div className='grid grid-cols-1 gap-y-2 '>
+                  <div className='flex items-end justify-end'>
+                    {chatQuestion && (
+                      <p className='bg-white text-zinc-950 px-4 py-1 rounded-full'>
+                        {chatQuestion}
+                      </p>
+                    )}
+                  </div>
+                  {loading ? (
+                    <span className='animate-pulse'>
+                      Generating response...
+                    </span>
+                  ) : (
+                    <div>{answer}</div>
+                  )}
+                </div>
+              </div>
 
               <div className='mt-2 flex items-start md:items-end justify-between w-full gap-x-2'>
                 <input
                   value={question}
-                  onChange={(e) => setQuestion(e.target.value)}
+                  onChange={(e) => {
+                    setQuestion(e.target.value);
+                  }}
                   className='w-full p-2 rounded-lg text-sm bg-transparent border'
                   placeholder='Ask about image... '
                 />
-                <Send
-                  onClick={handleSubmit}
-                  className='w-10 size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
-                />
+
+                {loading ? (
+                  <div className='size-9 flex items-center justify-center  rounded-lg border p-2 bg-white/5 '>
+                    <Loader2 className='animate-spin ' />
+                  </div>
+                ) : (
+                  <Send
+                    onClick={handleSubmit}
+                    className='w-10 size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
+                  />
+                )}
               </div>
             </div>
           )}
@@ -166,7 +179,7 @@ const Camera = () => {
           <button className='absolute bottom-20 flex items-center justify-center  right-8 border-2 w-fit mx-auto rounded-full p-1 cursor-pointer'>
             <input
               type='file'
-              accept='image/*'
+              accept='image/jpeg'
               className='absolute inset-0 opacity-0 w-full h-full cursor-pointer'
               onChange={handleImageInput}
             />

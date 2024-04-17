@@ -1,74 +1,88 @@
 import Blob from '@/components/Blob';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { auth } from '@clerk/nextjs';
-import { ArrowRight } from 'lucide-react';
-import { FaShieldAlt } from 'react-icons/fa';
-import { MdViewCompact } from 'react-icons/md';
-import {
-  SiTailwindcss,
-  SiPython,
-  SiNextdotjs,
-  SiReact,
-  SiStripe,
-} from 'react-icons/si';
 import ProfileCard from '@/components/ProfileCard';
 
 const TECH = [
   {
     id: 1,
-    icon: <SiReact className='size-8' />,
     title: 'React',
-    description:
-      'A JavaScript library for building user interfaces, maintained by Facebook.',
   },
   {
     id: 2,
-    icon: <SiNextdotjs className='size-8' />,
     title: 'Next.js',
-    description:
-      'A React framework that enables functionality like server-side rendering and generating static websites for React based web applications.',
   },
   {
     id: 3,
-    icon: <SiTailwindcss className='size-8' />,
     title: 'Tailwind CSS',
-    description:
-      'A utility-first CSS framework for creating custom designs quickly.',
   },
   {
     id: 4,
-    icon: <FaShieldAlt className='size-6' />,
     title: 'Clerk',
-    description:
-      'A developer-first authentication and user management service.',
+  },
+
+  {
+    id: 7,
+    title: 'Python',
+  },
+
+  {
+    id: 8,
+    title: 'Ollama',
+  },
+
+  {
+    id: 10,
+    title: 'Digital Ocean',
+  },
+
+  {
+    id: 11,
+    title: 'Numpy',
+  },
+
+  {
+    id: 18,
+    title: 'Open Cv',
   },
   {
     id: 5,
-    icon: <MdViewCompact className='size-8' />,
     title: 'Shadcn-ui',
-    description:
-      'It seems there might be a typo or an unknown technology. Could you provide more information?',
+  },
+
+  {
+    id: 9,
+    title: 'Collab',
+  },
+
+  {
+    id: 12,
+    title: 'Matplotlib',
   },
   {
-    id: 6,
-    icon: <SiStripe className='size-8' />,
-    title: 'Stripe',
-    description: 'A payment processing platform for online businesses.',
+    id: 13,
+    title: 'Seaborn',
   },
   {
-    id: 7,
-    icon: <SiPython className='size-8' />,
-    title: 'Python',
-    description:
-      'A high-level, interpreted programming language known for its simplicity and readability.',
+    id: 14,
+    title: 'TensorFlow',
   },
   {
-    id: 8,
-    icon: <SiPython className='size-8' />,
-    title: 'Ollama',
-    description:
-      'It seems there might be a typo or an unknown technology. Could you provide more information?',
+    id: 15,
+    title: 'Keras',
+  },
+  {
+    id: 16,
+    title: 'Sklearn',
+  },
+  {
+    id: 17,
+    title: 'SAM (meta)',
+  },
+
+  {
+    id: 19,
+    title: 'Pandas',
   },
 ];
 
@@ -99,7 +113,7 @@ export default function Home() {
   return (
     <>
       <Blob />
-      <div className=' overflow-x-hidden min-h-screen  bg-gray-950/30 backdrop-blur-xl flex flex-col items-center justify-center'>
+      <div className=' overflow-x-hidden min-h-screen bg-gray-950/30 backdrop-blur-xl flex flex-col items-center justify-center'>
         <div className='flex flex-col items-center justify-center h-screen '>
           <div className='flex flex-col gap-y-2'>
             <h1 className='text-6xl sm:text-[6rem] font-bold text-white text-center'>
@@ -110,21 +124,36 @@ export default function Home() {
             </p>
           </div>
 
-          <Button
-            className='mt-16 rounded-full  sm:text-xl  sm:h-[3.5rem]  px-12 font-light bg-gray-950 hover:bg-gray-900'
-            size={'lg'}
-            asChild
-          >
-            {userId ? (
-              <Link href={'/chat'}>
-                Chat <ArrowRight className='ml-1 size-5' />
-              </Link>
-            ) : (
-              <Link href={'/sign-in'}>
-                Login <ArrowRight className='ml-1 size-5' />
-              </Link>
-            )}
-          </Button>
+          <button className='mt-16  bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px   leading-6   text-white inline-block'>
+            <span className='absolute inset-0 overflow-hidden rounded-full '>
+              <span className='absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,126,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-100 '></span>
+            </span>
+            <div className='relative flex space-x-2 items-center z-10 rounded-full sm:text-xl  sm:h-[3rem] bg-zinc-950 py-1 px-8 ring-1 ring-white/10 '>
+              <span>
+                {userId ? (
+                  <Link href={'/chat'}>Chat</Link>
+                ) : (
+                  <Link href={'/sign-in'}>Login</Link>
+                )}
+              </span>
+              <svg
+                width='32'
+                height='32'
+                viewBox='0 0 24 24'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  stroke='currentColor'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth='1.5'
+                  d='M10.75 8.75L14.25 12L10.75 15.25'
+                ></path>
+              </svg>
+            </div>
+            <span className='absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40'></span>
+          </button>
         </div>
 
         {/* Tech */}
@@ -133,13 +162,13 @@ export default function Home() {
             Technologies
           </h1>
 
-          <div className='mt-10 grid sm:grid-cols-2 md:grid-cols-3 justify-items-center lg:grid-cols-4 gap-4'>
+          <div className='px-4 mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 justify-items-center sm:justify-items-start gap-8'>
             {TECH.map((tech) => (
-              <div key={tech.id} className='  p-4 rounded-lg '>
-                <div className='flex items-center space-x-2'>
-                  <span>{tech.icon}</span>
-                  <span>{tech.title}</span>
-                </div>
+              <div
+                key={tech.id}
+                className='underline underline-offset-2 text-lg'
+              >
+                <span>{tech.title}</span>
               </div>
             ))}
           </div>
