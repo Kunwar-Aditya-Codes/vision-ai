@@ -104,7 +104,7 @@ const Camera = () => {
 
       {capture ? (
         <div className='h-full flex flex-col md:flex-row object-cover'>
-          <div className='h-[80%] flex items-center justify-center  md:h-full md:w-[70%] w-full bg-[url("https://media.istockphoto.com/id/1403848173/vector/vector-online-chatting-pattern-online-chatting-seamless-background.jpg?s=612x612&w=0&k=20&c=W3O15mtJiNlJuIgU6S9ZlnzM_yCE27eqwTCfXGYwCSo=")] bg-zinc-950/90 bg-blend-color p-4'>
+          <div className='h-[50%] flex items-center justify-center  md:h-full md:w-[70%] w-full bg-[url("https://media.istockphoto.com/id/1403848173/vector/vector-online-chatting-pattern-online-chatting-seamless-background.jpg?s=612x612&w=0&k=20&c=W3O15mtJiNlJuIgU6S9ZlnzM_yCE27eqwTCfXGYwCSo=")] bg-zinc-950/90 bg-blend-color p-4'>
             <img src={capture} alt='' className='rounded-xl' />
           </div>
           {isBlind ? (
