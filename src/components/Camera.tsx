@@ -53,13 +53,31 @@ const Camera = () => {
       question,
     });
 
-    const ans = await res.json();
-
-    if (ans.success === false) {
-      setAnswer('Fetch failed!');
-    } else {
-      setAnswer(ans.answer);
+    //* NEW CODE
+    const reader = res.body?.getReader();
+    const decoder = new TextDecoder();
+    let result = '';
+    let prevChunk = '';
+    while (true) {
+      const { done, value } = await reader!.read();
+      if (done) {
+        break;
+      }
+      const chunk = decoder.decode(value, { stream: true });
+      if (chunk !== prevChunk) {
+        result += chunk;
+        setAnswer(result);
+        prevChunk = chunk;
+      }
     }
+
+    //* LEGACY
+    // const ans = await res.json();
+    // if (ans.success === false) {
+    //   setAnswer('Fetch failed!');
+    // } else {
+    //   setAnswer(ans.answer);
+    // }
 
     setLoading(false);
   };
@@ -120,13 +138,14 @@ const Camera = () => {
                       </p>
                     )}
                   </div>
-                  {loading ? (
+                  <div>{answer}</div>
+                  {/* {loading ? (
                     <span className='animate-pulse'>
                       Generating response...
                     </span>
                   ) : (
                     <div>{answer}</div>
-                  )}
+                  )} */}
                 </div>
               </div>
 

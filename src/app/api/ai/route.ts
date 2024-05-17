@@ -1,5 +1,6 @@
 import { Ollama } from '@langchain/community/llms/ollama';
 import { NextRequest } from 'next/server';
+import { StringOutputParser } from '@langchain/core/output_parsers';
 
 interface ImageData {
   imageData: string;
@@ -16,20 +17,29 @@ export const POST = async (req: NextRequest) => {
 
     const llava = new Ollama({
       // baseUrl: 'http://localhost:11434',
-      baseUrl: 'http://142.93.210.103:11434',
+
+      baseUrl: 'http://206.189.141.153:11434/',
       model: 'llava',
     }).bind({
       images: [base64EncodedImage],
     });
 
-    const llavaStream = await llava.stream(
-      data.question
-        ? `Answer this question from the provided image - "${data.question}". Don't add extra response. Answer only what is asked`
-        : 'Explain the image'
-    );
-    const llavaAnswer = await streamToString(llavaStream);
+    const llavaStream = await llava
+      .pipe(new StringOutputParser())
+      .stream(
+        data.question
+          ? `Answer this question from the provided image - "${data.question}". Don't add extra response. Answer only what is asked`
+          : 'Explain the image'
+      );
 
-    return Response.json({ success: true, answer: llavaAnswer });
+    return new Response(llavaStream, {
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    });
+
+    // const llavaAnswer = await streamToString(llavaStream);
+    // return Response.json({ success: true, answer: llavaAnswer });
   } catch (error) {
     console.error('Error:', error);
     return Response.json(
@@ -39,10 +49,10 @@ export const POST = async (req: NextRequest) => {
   }
 };
 
-async function streamToString(stream: any) {
-  const chunks = [];
-  for await (const chunk of stream) {
-    chunks.push(chunk);
-  }
-  return chunks.join('');
-}
+// async function streamToString(stream: any) {
+//   const chunks = [];
+//   for await (const chunk of stream) {
+//     chunks.push(chunk);
+//   }
+//   return chunks.join('');
+// }
