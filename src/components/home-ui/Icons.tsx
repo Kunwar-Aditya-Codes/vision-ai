@@ -15,7 +15,7 @@ const Icons = () => {
   return (
     <div className='flex flex-col sm:flex-row items-center gap-12 mt-6 '>
       {ICONS.map((icon) => (
-        <span>{icon.icon}</span>
+        <span key={icon.label}>{icon.icon}</span>
       ))}
     </div>
   );
