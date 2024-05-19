@@ -29,10 +29,12 @@ const Camera = () => {
     }
   }, [webcamRef]);
 
+  // toggle
   const toggleFacingMode = () => {
     setFacingMode((prevMode) => (prevMode === 'user' ? 'environment' : 'user'));
   };
 
+  // response
   const handleSubmit = async () => {
     setLoading(true);
 
@@ -59,6 +61,7 @@ const Camera = () => {
     let result = '';
     let prevChunk = '';
     while (true) {
+      setLoading(false);
       const { done, value } = await reader!.read();
       if (done) {
         break;
@@ -82,6 +85,7 @@ const Camera = () => {
     setLoading(false);
   };
 
+  // image input
   const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     const reader = new FileReader();
@@ -95,6 +99,7 @@ const Camera = () => {
     }
   };
 
+  // reset
   const handleReset = () => {
     setCapture('');
     setChatQuestion('');
@@ -122,7 +127,7 @@ const Camera = () => {
 
       {capture ? (
         <div className='h-full flex flex-col md:flex-row object-cover'>
-          <div className='h-[50%] flex items-center justify-center  md:h-full md:w-[70%] w-full bg-[url("https://media.istockphoto.com/id/1403848173/vector/vector-online-chatting-pattern-online-chatting-seamless-background.jpg?s=612x612&w=0&k=20&c=W3O15mtJiNlJuIgU6S9ZlnzM_yCE27eqwTCfXGYwCSo=")] bg-zinc-950/90 bg-blend-color p-16  '>
+          <div className='h-[20rem] flex items-center justify-center  md:h-full md:w-[70%] w-full bg-[url("https://media.istockphoto.com/id/1403848173/vector/vector-online-chatting-pattern-online-chatting-seamless-background.jpg?s=612x612&w=0&k=20&c=W3O15mtJiNlJuIgU6S9ZlnzM_yCE27eqwTCfXGYwCSo=")] bg-zinc-950/90 bg-blend-color p-16  '>
             <img
               src={capture}
               alt=''
@@ -132,9 +137,9 @@ const Camera = () => {
           {isBlind ? (
             <Blind capture={capture} />
           ) : (
-            <div className='flex flex-col h-full justify-end gap-y-2 p-8 md:p-8 w-full'>
-              <div className='border border-white/15 md:mt-12 grow flex flex-col justify-end rounded-lg p-4'>
-                <div className='grid grid-cols-1 gap-y-2 '>
+            <div className='flex flex-col  h-full justify-end gap-y-2 p-8 md:p-8 w-full'>
+              <div className='border overflow-hidden h-[20rem] md:h-full  border-white/15 md:mt-12 grow flex flex-col justify-end rounded-lg p-4'>
+                <div className='grid grid-cols-1 gap-y-2 overflow-y-scroll'>
                   <div className='flex items-end justify-end'>
                     {chatQuestion && (
                       <p className='bg-white text-zinc-950 px-4 py-1 rounded-full'>
@@ -142,14 +147,14 @@ const Camera = () => {
                       </p>
                     )}
                   </div>
-                  <div>{answer}</div>
-                  {/* {loading ? (
+
+                  {loading ? (
                     <span className='animate-pulse'>
                       Generating response...
                     </span>
                   ) : (
                     <div>{answer}</div>
-                  )} */}
+                  )}
                 </div>
               </div>
 
