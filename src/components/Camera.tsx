@@ -17,9 +17,9 @@ const Camera = () => {
     'environment'
   );
   const [answer, setAnswer] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const webcamRef = useRef<Webcam>(null);
-  const [capture, setCapture] = useState<string>();
+  const [capture, setCapture] = useState<string>('');
   const [chatQuestion, setChatQuestion] = useState<string>('');
 
   const captureImage = useCallback(async () => {
@@ -137,9 +137,9 @@ const Camera = () => {
           {isBlind ? (
             <Blind capture={capture} />
           ) : (
-            <div className='flex flex-col  h-full justify-end gap-y-2 p-8 md:p-8 w-full'>
+            <div className='flex flex-col  h-full justify-end gap-y-2 p-8  w-full'>
               <div className='border overflow-hidden h-[20rem] md:h-full  border-white/15 md:mt-12 grow flex flex-col justify-end rounded-lg p-4'>
-                <div className='grid grid-cols-1 gap-y-2 overflow-y-scroll'>
+                <div className='grid grid-cols-1 gap-y-4 overflow-y-scroll'>
                   <div className='flex items-end justify-end'>
                     {chatQuestion && (
                       <p className='bg-white text-zinc-950 px-4 py-1 rounded-full'>
@@ -149,8 +149,13 @@ const Camera = () => {
                   </div>
 
                   {loading ? (
-                    <span className='animate-pulse'>
-                      Generating response...
+                    <span className='flex items-center '>
+                      Generating response
+                      <span className='ml-1.5 flex items-center gap-1'>
+                        <span className='animate-flashing size-1.5 bg-white rounded-full inline-block' />
+                        <span className='animate-flashing size-1.5 delay-100 bg-white rounded-full inline-block' />
+                        <span className='animate-flashing size-1.5 delay-200 bg-white rounded-full inline-block' />
+                      </span>
                     </span>
                   ) : (
                     <div>{answer}</div>

@@ -2,6 +2,7 @@ import Blob from '@/components/Blob';
 import DevProfile from '@/components/home-ui/DevProfile';
 import Icons from '@/components/home-ui/Icons';
 import { auth } from '@clerk/nextjs';
+import { Settings } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Home() {
@@ -10,7 +11,15 @@ export default function Home() {
   return (
     <>
       <Blob />
-      <div className=' overflow-x-hidden min-h-screen bg-gray-950/30 backdrop-blur-xl flex flex-col items-center justify-center'>
+      <div className=' overflow-x-hidden relative min-h-screen bg-gray-950/30 backdrop-blur-xl flex flex-col items-center justify-center'>
+        {userId ? (
+          <Link
+            href={'/settings'}
+            className='absolute z-10 top-4 md:top-8 md:right-12 flex items-center justify-center  right-4 bg-gray-950 w-fit mx-auto rounded-full p-1.5'
+          >
+            <Settings className='size-6' />
+          </Link>
+        ) : null}
         <div className='flex flex-col items-center justify-center h-screen '>
           <div className='flex flex-col gap-y-2'>
             <h1 className='text-6xl sm:text-[6rem] font-bold text-white text-center'>
@@ -88,6 +97,8 @@ export default function Home() {
             ))}
           </div> */}
         </div>
+
+        {/*  */}
 
         <footer className='flex items-center justify-center w-full h-12 bg-white/5'>
           <p className='text-sm text-zinc-200'>

@@ -29,7 +29,7 @@ const Settings = () => {
           <div className='max-w-lg mx-auto md:bg-white/5 rounded-lg border-white/10 flex flex-col gap-y-8 items-start p-8 shadow-xl border w-full  h-auto'>
             <div className='flex items-center justify-between w-full'>
               <label htmlFor='airplane-mode' className='text-lg font-medium'>
-                For Blind
+                For visual impaired
               </label>
               <Switch
                 checked={isBlind}
@@ -39,15 +39,15 @@ const Settings = () => {
               />
             </div>
 
-            <div className='flex items-center justify-between w-full text-lg font-medium'>
+            {/* <div className='flex items-center justify-between w-full text-lg font-medium'>
               <label htmlFor='plan-type'>Current Plan</label>
               <p id='plan-type'>Basic</p>
-            </div>
+            </div> */}
 
             <div className='grid grid-cols-1 gap-y-3 w-full'>
-              <Button className='w-full bg-transparent border border-white/25  hover:bg-white/5'>
+              {/* <Button className='w-full bg-transparent border border-white/25  hover:bg-white/5'>
                 Upgrade to Pro
-              </Button>
+              </Button> */}
 
               <Button asChild>
                 <Link

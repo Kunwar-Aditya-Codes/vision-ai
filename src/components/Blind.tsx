@@ -43,6 +43,8 @@ const Blind = ({ capture }: { capture: string }) => {
 
     setChatQuestion(question);
 
+    setAnswer('');
+
     setQuestion('');
 
     if (!capture) {
@@ -54,10 +56,25 @@ const Blind = ({ capture }: { capture: string }) => {
     }
 
     const res = await fetchAnswer({ imageData: capture, question });
-    const ans = await res.json();
 
-    setAnswer(ans.success ? ans.answer : 'Error. Try again!');
-    speakAnswer(ans.success ? ans.answer : 'Error. Try again!');
+    const reader = res.body?.getReader();
+    const decoder = new TextDecoder();
+    let result = '';
+    let prevChunk = '';
+    while (true) {
+      setLoading(false);
+      const { done, value } = await reader!.read();
+      if (done) {
+        break;
+      }
+      const chunk = decoder.decode(value, { stream: true });
+      if (chunk !== prevChunk) {
+        result += chunk;
+        setAnswer(result);
+        speakAnswer(chunk);
+        prevChunk = chunk;
+      }
+    }
 
     resetTranscript();
     setLoading(false);
@@ -93,25 +110,25 @@ const Blind = ({ capture }: { capture: string }) => {
   };
 
   return (
-    <div className='p-2 md:p-4 w-full flex flex-col grow h-full   md:mt-16'>
+    <div className='px-8 py-4 md:p-4 w-full flex flex-col grow h-full md:mt-16'>
       <div className='flex items-center justify-between'>
         <Mic
           onClick={startListening}
           className={cn(
-            'size-11 md:size-9 rounded-lg border p-2 cursor-pointer bg-white/5',
+            'size-14 md:size-9 rounded-lg border p-2 cursor-pointer bg-white/5',
             listening && 'bg-white text-black'
           )}
         />
         <Volume2
           onClick={() => speakAnswer(answer)}
           className={cn(
-            'size-11 md:size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
+            'size-14 md:size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
           )}
         />
       </div>
 
       <div className='flex flex-col h-full justify-end gap-y-2 mt-2 w-full'>
-        <div className='border border-white/15 md:mt-12 grow flex flex-col justify-end rounded-lg p-4'>
+        <div className='border h-[20rem] border-white/15 md:mt-12 grow flex flex-col justify-end rounded-lg p-4'>
           <div className='grid grid-cols-1 gap-y-2 '>
             <div className='flex items-end justify-end'>
               {chatQuestion && (
@@ -121,13 +138,20 @@ const Blind = ({ capture }: { capture: string }) => {
               )}
             </div>
             {loading ? (
-              <span className='animate-pulse'>Generating response...</span>
+              <span className='flex items-center '>
+                Generating response
+                <span className='ml-1.5 flex items-center gap-1'>
+                  <span className='animate-flashing size-1.5 bg-white rounded-full inline-block' />
+                  <span className='animate-flashing size-1.5 delay-100 bg-white rounded-full inline-block' />
+                  <span className='animate-flashing size-1.5 delay-200 bg-white rounded-full inline-block' />
+                </span>
+              </span>
             ) : (
               <div>{answer}</div>
             )}
           </div>
         </div>
-        <div className='mt-2 flex items-start gap-x-2'>
+        <div className='mt-2 flex items-start gap-x-8'>
           <textarea
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
@@ -135,13 +159,13 @@ const Blind = ({ capture }: { capture: string }) => {
             placeholder='Ask about image... '
           />
           {loading ? (
-            <div className='size-9 flex items-center justify-center  rounded-lg border p-2 bg-white/5 '>
-              <Loader2 className='animate-spin ' />
+            <div className='size-12 flex items-center justify-center  rounded-lg border p-2 bg-white/5 '>
+              <Loader2 className='animate-spin' />
             </div>
           ) : (
             <Send
               onClick={handleSubmit}
-              className='w-10 size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
+              className='size-12 rounded-lg border p-2.5 cursor-pointer bg-white/5'
             />
           )}
         </div>
