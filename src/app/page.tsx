@@ -1,8 +1,9 @@
 import Blob from '@/components/Blob';
 import DevProfile from '@/components/home-ui/DevProfile';
 import Icons from '@/components/home-ui/Icons';
+import ProfileCard from '@/components/home-ui/ProfileCard';
 import { auth } from '@clerk/nextjs';
-import { Settings } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Settings } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Home() {
@@ -56,6 +57,18 @@ export default function Home() {
               <span className='absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40'></span>
             </button>
           </Link>
+
+          <div className='mt-8'>
+            <Link
+              href={'/steps'}
+              className=' text-sm flex items-center space-x-2'
+            >
+              <span className='underline underline-offset-2'>
+                How the app works
+              </span>
+              <ArrowRight className='size-4' />
+            </Link>
+          </div>
         </div>
 
         {/* Tech */}
@@ -78,24 +91,37 @@ export default function Home() {
           <Icons />
         </div>
 
+        {/* Abstract */}
+        <div className='max-w-6xl mt-28 mb-16 py-8 mx-auto bg-white/5 backdrop-blur lg:rounded-xl '>
+          <h1 className='text-center text-4xl font-bold  text-zinc-200 '>
+            About Project
+          </h1>
+          <p className='p-8 text-justify font-light '>
+            This research focuses on creating a web application to enhance
+            accessibility for visually impaired individuals by using advanced
+            image processing and natural language processing (NLP) technologies.
+            The app captures images through smartphone cameras, applies image
+            segmentation to identify key components like product packaging, and
+            generates descriptive captions using a large language model (LLM).
+            It also integrates text-to-speech and speech-to-text functionalities
+            for auditory feedback and voice commands. Comprehensive testing
+            ensures usability and effectiveness, aiming to empower visually
+            impaired users and promote inclusivity, allowing everyone to engage
+            fully in daily activities.
+          </p>
+        </div>
+
         {/* Developers */}
         <div className='max-w-6xl mt-28 mb-16 pb-8 mx-auto'>
           <h1 className='text-center text-4xl font-bold text-zinc-200'>
             The Team
           </h1>
 
-          <DevProfile />
+          {/* <DevProfile /> */}
 
-          {/* <div className='mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-items-center gap-4'>
-            {TEAM.map((member) => (
-              <ProfileCard
-                key={member.id}
-                name={member.name}
-                source={member.sourceImage}
-                description={member.description}
-              />
-            ))}
-          </div> */}
+          <div className='mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-items-center gap-4 lg:gap-8'>
+            <ProfileCard />
+          </div>
         </div>
 
         {/*  */}

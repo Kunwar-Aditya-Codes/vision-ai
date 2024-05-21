@@ -1,7 +1,6 @@
 'use client';
 
 import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 
 const TEAM = [
   {
@@ -26,21 +25,19 @@ const TEAM = [
 
 const DevProfile = () => {
   return (
-    <div className='flex flex-col lg:flex-row lg:gap-36 items-center p-8 gap-20'>
+    <div className='flex flex-col lg:flex-row lg:gap-42 items-center p-8 gap-20'>
       {TEAM.map((member) => (
         <div
           key={member.name}
           className='flex flex-col items-start border border-zinc-600 backdrop-blur-lg h-[30rem] p-6 rounded-xl'
         >
-          <Image
+          <img
             src={member.sourceImage}
             alt={member.name}
-            height={500}
-            width={500}
-            className=' object-cover size-[15rem] object-center rounded-xl'
+            className='object-cover size-[15rem] object-center rounded-xl'
           />
           <div className='mt-4 text-center flex flex-col  items-center space-y-3'>
-            <p className='text-xl w-full text-start  '>{member.name}</p>
+            <p className='text-xl w-full text-start'>{member.name}</p>
             <div className='flex flex-col '>
               {member.description.map((contribution) => (
                 <span

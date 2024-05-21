@@ -71,10 +71,10 @@ const Blind = ({ capture }: { capture: string }) => {
       if (chunk !== prevChunk) {
         result += chunk;
         setAnswer(result);
-        speakAnswer(chunk);
         prevChunk = chunk;
       }
     }
+    speakAnswer(result);
 
     resetTranscript();
     setLoading(false);
@@ -115,21 +115,21 @@ const Blind = ({ capture }: { capture: string }) => {
         <Mic
           onClick={startListening}
           className={cn(
-            'size-14 md:size-9 rounded-lg border p-2 cursor-pointer bg-white/5',
+            'size-12 md:size-9 rounded-lg border p-2 cursor-pointer bg-white/5',
             listening && 'bg-white text-black'
           )}
         />
         <Volume2
           onClick={() => speakAnswer(answer)}
           className={cn(
-            'size-14 md:size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
+            'size-12 md:size-9 rounded-lg border p-2 cursor-pointer bg-white/5'
           )}
         />
       </div>
 
       <div className='flex flex-col h-full justify-end gap-y-2 mt-2 w-full'>
-        <div className='border h-[20rem] border-white/15 md:mt-12 grow flex flex-col justify-end rounded-lg p-4'>
-          <div className='grid grid-cols-1 gap-y-2 '>
+        <div className='border overflow-hidden h-[25rem] border-white/15 md:mt-12 grow flex flex-col justify-end rounded-lg p-4'>
+          <div className='grid grid-cols-1 gap-y-2 overflow-y-scroll '>
             <div className='flex items-end justify-end'>
               {chatQuestion && (
                 <p className='bg-white text-zinc-950 px-4 py-1 rounded-full'>
