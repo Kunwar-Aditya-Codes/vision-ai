@@ -132,7 +132,7 @@ const Blind = ({ capture }: { capture: string }) => {
           <div className='grid grid-cols-1 gap-y-2 overflow-y-scroll '>
             <div className='flex items-end justify-end'>
               {chatQuestion && (
-                <p className='bg-white text-zinc-950 px-4 py-1 rounded-full'>
+                <p className='bg-white text-zinc-950 px-6 py-1 rounded-full'>
                   {chatQuestion}
                 </p>
               )}

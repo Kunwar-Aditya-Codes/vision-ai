@@ -3,7 +3,7 @@ import DevProfile from '@/components/home-ui/DevProfile';
 import Icons from '@/components/home-ui/Icons';
 import ProfileCard from '@/components/home-ui/ProfileCard';
 import { auth } from '@clerk/nextjs';
-import { ArrowLeft, ArrowRight, Settings } from 'lucide-react';
+import { ArrowRight, Settings } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Home() {
@@ -58,7 +58,7 @@ export default function Home() {
             </button>
           </Link>
 
-          <div className='mt-8'>
+          <div className='mt-16'>
             <Link
               href={'/steps'}
               className=' text-sm flex items-center space-x-2'
@@ -69,6 +69,26 @@ export default function Home() {
               <ArrowRight className='size-4' />
             </Link>
           </div>
+        </div>
+
+        {/* Abstract */}
+        <div className='max-w-6xl mt-28 mb-16 py-8 mx-auto bg-white/5 backdrop-blur lg:rounded-xl '>
+          <h1 className='text-center text-4xl font-bold  text-zinc-200 '>
+            About Project
+          </h1>
+          <p className='p-8 text-justify font-light'>
+            This research focuses on creating a web application to enhance
+            accessibility for visually impaired individuals by using advanced
+            image processing and natural language processing (NLP) technologies.
+            The app captures images through smartphone cameras, applies image
+            segmentation to identify key components like product packaging, and
+            generates descriptive captions using a large language model (LLM).
+            It also integrates text-to-speech and speech-to-text functionalities
+            for auditory feedback and voice commands. Comprehensive testing
+            ensures usability and effectiveness, aiming to empower visually
+            impaired users and promote inclusivity, allowing everyone to engage
+            fully in daily activities.
+          </p>
         </div>
 
         {/* Tech */}
@@ -89,26 +109,6 @@ export default function Home() {
           </div> */}
 
           <Icons />
-        </div>
-
-        {/* Abstract */}
-        <div className='max-w-6xl mt-28 mb-16 py-8 mx-auto bg-white/5 backdrop-blur lg:rounded-xl '>
-          <h1 className='text-center text-4xl font-bold  text-zinc-200 '>
-            About Project
-          </h1>
-          <p className='p-8 text-justify font-light '>
-            This research focuses on creating a web application to enhance
-            accessibility for visually impaired individuals by using advanced
-            image processing and natural language processing (NLP) technologies.
-            The app captures images through smartphone cameras, applies image
-            segmentation to identify key components like product packaging, and
-            generates descriptive captions using a large language model (LLM).
-            It also integrates text-to-speech and speech-to-text functionalities
-            for auditory feedback and voice commands. Comprehensive testing
-            ensures usability and effectiveness, aiming to empower visually
-            impaired users and promote inclusivity, allowing everyone to engage
-            fully in daily activities.
-          </p>
         </div>
 
         {/* Developers */}

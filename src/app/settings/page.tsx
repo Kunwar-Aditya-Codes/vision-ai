@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import useBoundStore from '@/store/store';
 import { UserButton } from '@clerk/nextjs';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, TriangleAlert } from 'lucide-react';
 import Link from 'next/link';
 
 const Settings = () => {
@@ -59,6 +59,11 @@ const Settings = () => {
                   Share your feedback
                 </Link>
               </Button>
+            </div>
+
+            <div className='bg-rose-600/60 border-2 border-red-600 p-3 rounded-xl space-x-4'>
+              <TriangleAlert className='size-6' />
+              The app can sometimes hallucinate and produce incorrect results.
             </div>
           </div>
         </div>
